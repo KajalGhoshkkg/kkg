@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
-const bcrypt = require("bcrypt");
+// const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const adminSchema = new mongoose.Schema({
@@ -40,13 +40,14 @@ adminSchema.pre("save", async function (next) {
   if (!this.isModified) {
     return next();
   }
-  this.password = await bcrypt.hash(this.password, 12);
+  // this.password = await bcrypt.hash(this.password, 12);
   this.confirmPassword = undefined;
   next();
 });
-adminSchema.methods.check = async function (currentPassword) {
-  return await bcrypt.compare(currentPassword, this.password);
-};
+
+// adminSchema.methods.check = async function (currentPassword) {
+//   return await bcrypt.compare(currentPassword, this.password);
+// };
 
 adminSchema.methods.getToken = async function () {
   return await jwt.sign({ id: this._id }, process.env.key, {

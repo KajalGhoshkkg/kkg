@@ -40,8 +40,8 @@ exports.login = async (req, res) => {
       message: "user not found",
     });
   }
-  const checkPassword = await user.check(password);
-  if (!checkPassword) {
+  // const checkPassword = await user.check(password);
+  if (password !== user.password) {
     return res.status(200).json({
       message: "password mismatch",
     });
